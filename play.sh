@@ -23,7 +23,7 @@ function autoplay() {
 
   if [ $d_now -ge $d_then ];
   then
-    if [ $d_now -lt 1600 ] && [ $d_now -gt 0800 ] && [ "$d_day" -ne "Sat" ] && [ "$d_day" -ne "Sun" ];
+    if [ $d_now -lt 1600 ] && [ $d_now -gt 0800 ] && [ "$d_day" != "Sat" ] && [ "$d_day" != "Sun" ];
       then
         d_then=$(date -d '+15minute' +'%H%M')
         play
