@@ -4,15 +4,24 @@
 # - ffmpeg
 
 musicPath="/opt/randomSong/music"
+fxPath="/opt/randomSong/FX"
+playNotify="/opt/randomSong/wolf.mp3"
 d_then=$(date -d '+15minute' +'%H%M')
 
 # Start up notification
-ffplay -nodisp -autoexit tone.mp3
+ffplay -nodisp -autoexit wolf.mp3 
 
 function play() {
-    ffplay -nodisp -autoexit tone.mp3   #notify button has been pressed
-    ls music |sort -R |tail -1 |while read file; do     #list music files and select the last one
-    ffplay -nodisp -autoexit "$musicPath/$file" #play music
+    ffplay -nodisp -autoexit $playNotify	#notify button has been pressed
+    ls music |sort -R |tail -1 |while read file; do	#list music files and select the last one
+    ffplay -nodisp -autoexit "$musicPath/$file"	#play music
+    d_last=$(date +%s) #Last time music was played
+  done
+}
+
+function playFX() {
+    ls FX |sort -R |tail -1 |while read file; do	#list music files and select the last one
+    ffplay -nodisp -autoexit "$fxPath/$file" &	#play music
     d_last=$(date +%s) #Last time music was played
   done
 }
@@ -26,7 +35,7 @@ function autoplay() {
     if [ $d_now -lt 1600 ] && [ $d_now -gt 0800 ] && [ "$d_day" != "Sat" ] && [ "$d_day" != "Sun" ];
       then
         d_then=$(date -d '+15minute' +'%H%M')
-        play
+        playFX
       else
         d_then=0800
       fi
