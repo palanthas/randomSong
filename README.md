@@ -1,5 +1,4 @@
 # randomSong
-## Play a random song when triggered
 
 ## Requirements
 ffmpeg
