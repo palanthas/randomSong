@@ -12,16 +12,20 @@ d_then=$(date -d '+15minute' +'%H%M')
 ffplay -nodisp -autoexit wolf.mp3 
 
 function play() {
+    curl "http://192.168.100.53/rpc/Switch.Set?id=0&on=true"
     ffplay -nodisp -autoexit $playNotify	#notify button has been pressed
     ls music |sort -R |tail -1 |while read file; do	#list music files and select the last one
     ffplay -nodisp -autoexit "$musicPath/$file"	#play music
+    curl "http://192.168.100.53/rpc/Switch.Set?id=0&on=false"
     d_last=$(date +%s) #Last time music was played
   done
 }
 
 function playFX() {
+    curl "http://192.168.100.53/rpc/Switch.Set?id=0&on=true"
     ls FX |sort -R |tail -1 |while read file; do	#list music files and select the last one
     ffplay -nodisp -autoexit "$fxPath/$file" &	#play music
+    curl "http://192.168.100.53/rpc/Switch.Set?id=0&on=false"
     d_last=$(date +%s) #Last time music was played
   done
 }
